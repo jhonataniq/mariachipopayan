@@ -319,6 +319,30 @@ const imagenes = [
         boton.addEventListener('click', volverArriba);
     })();
 
+    // FAQ Functionality
+(function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            const isActive = this.classList.contains('active');
+            
+            // Cerrar todas las respuestas
+            faqQuestions.forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('active');
+            });
+            
+            // Abrir la respuesta clickeada si no estaba activa
+            if (!isActive) {
+                this.classList.add('active');
+                answer.classList.add('active');
+            }
+        });
+    });
+})();
+
     // Inicialización de componentes
     if (carouselFotos) carouselFotos.init();
     if (galeriaVideos) galeriaVideos.init();
