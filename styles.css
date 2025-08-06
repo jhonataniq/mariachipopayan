@@ -197,7 +197,7 @@ section p {
     background: linear-gradient(rgba(139, 0, 0, 0.4), rgba(139, 0, 0, 0.4)), url('images/mariachis-en-fiestas-patronales.jpg');
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -209,7 +209,15 @@ section p {
 #inicio h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-    color: white;
+    color: white !important;
+}
+
+#inicio p {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
 }
 
 /* Sección de paquetes */
@@ -540,9 +548,9 @@ section p {
 
 /* Contacto mejorado */
 .contacto-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 2rem;
 }
 
@@ -551,18 +559,23 @@ section p {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
 }
 
 .contacto-info h3 {
     color: var(--color-principal);
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 .contacto-info p {
     margin-bottom: 1rem;
     padding: 0.5rem 0;
     border-bottom: 1px solid #f0f0f0;
+    text-align: center;
 }
 
 .contacto-info p:last-child {
@@ -618,6 +631,63 @@ section p {
 .redes-link i {
     font-size: 1.2rem;
     width: 20px;
+}
+
+/* Sección FAQ */
+.faq-container {
+    max-width: 800px;
+    margin: 2rem auto 0;
+}
+
+/* FAQ Styles */
+.faq-item {
+    margin-bottom: 1rem !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+.faq-question {
+    background: #f8f8f8 !important;
+    padding: 1rem 1.5rem !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    color: #8B0000 !important;
+    border: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    transition: background-color 0.3s ease !important;
+    position: relative !important;
+    font-size: 1.1rem !important;
+}
+
+.faq-question:hover {
+    background: #e8e8e8 !important;
+}
+
+.faq-question.active {
+    background: #8B0000 !important;
+    color: white !important;
+}
+
+.faq-answer {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease !important;
+    background: white !important;
+}
+
+.faq-answer.active {
+    max-height: 200px !important; /* Ajustar según contenido */
+}
+
+.faq-answer p {
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    line-height: 1.6 !important;
+    color: #333 !important;
+    text-align: center !important;
+    font-size: 1rem !important;
 }
 
 /* Footer */
@@ -879,6 +949,11 @@ footer {
         font-size: 2.5rem;
     }
 
+    #inicio p {
+        font-size: 1.2rem;
+        color: white !important;
+    }
+
     .paquete {
         padding: 1.5rem;
     }
@@ -1002,13 +1077,13 @@ footer {
 
     /* Sección FAQ responsive */
     .faq-question {
-        padding: 1.2rem;
-        font-size: 0.9rem;
+        padding: 1.2rem !important;
+        font-size: 1rem !important;
     }
 
     .faq-answer p {
-        padding: 1.2rem;
-        font-size: 0.9rem;
+        padding: 1.2rem !important;
+        font-size: 0.95rem !important;
     }
 }
 
@@ -1100,6 +1175,15 @@ footer {
         font-size: 1.2rem !important;
     }
 
+    #inicio h1 {
+        font-size: 2rem;
+    }
+
+    #inicio p {
+        font-size: 1rem;
+        color: white !important;
+    }
+
     /* Sección Sobre Nosotros en pantallas pequeñas */
     .sobre-container {
         margin: 1rem auto 0;
@@ -1145,6 +1229,17 @@ footer {
     .repertorio-lista li ul li::before {
         font-size: 0.8rem;
         margin-right: 0.6rem;
+    }
+
+    /* Sección FAQ para pantallas muy pequeñas */
+    .faq-question {
+        padding: 1rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    .faq-answer p {
+        padding: 1rem !important;
+        font-size: 0.85rem !important;
     }
 }
 
@@ -1204,60 +1299,7 @@ footer {
 
 
 
-/* Sección FAQ */
-.faq-container {
-    max-width: 800px;
-    margin: 2rem auto 0;
-}
 
-/* FAQ Styles */
-.faq-item {
-    margin-bottom: 1rem !important;
-    border: 1px solid #ddd !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-}
-
-.faq-question {
-    background: #f8f8f8 !important;
-    padding: 1rem 1.5rem !important;
-    cursor: pointer !important;
-    font-weight: bold !important;
-    color: #8B0000 !important;
-    border: none !important;
-    width: 100% !important;
-    text-align: left !important;
-    transition: background-color 0.3s ease !important;
-    position: relative !important;
-}
-
-.faq-question:hover {
-    background: #e8e8e8 !important;
-}
-
-.faq-question.active {
-    background: #8B0000 !important;
-    color: white !important;
-}
-
-.faq-answer {
-    max-height: 0 !important;
-    overflow: hidden !important;
-    transition: max-height 0.3s ease !important;
-    background: white !important;
-}
-
-.faq-answer.active {
-    max-height: 200px !important; /* Ajustar según contenido */
-}
-
-.faq-answer p {
-    padding: 1.5rem !important;
-    margin: 0 !important;
-    line-height: 1.6 !important;
-    color: #333 !important;
-    text-align: center !important;
-}
 
 /* Reducir espacio en secciones específicas */
 .inicio {
