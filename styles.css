@@ -105,11 +105,23 @@ header {
     white-space: nowrap;
 }
 
+.menu-toggle-container {
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
 #menu-toggle {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.menu-label {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 #menu-toggle span {
@@ -311,13 +323,19 @@ section p {
     font-weight: bold !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
     line-height: 1.4 !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
 }
 
 .paquete-precio p strong {
     font-size: 1.5rem !important;
     display: block !important;
-    margin-bottom: 0.3rem !important;
+    margin-bottom: 0 !important;
     color: white !important;
+    text-align: center !important;
 }
 
 .paquete-precio p br + * {
@@ -325,6 +343,7 @@ section p {
     font-weight: normal !important;
     opacity: 0.9 !important;
     color: white !important;
+    text-align: center !important;
 }
 
 .paquete:hover .paquete-precio {
@@ -782,10 +801,14 @@ footer {
 
 /* Responsive design */
 @media (max-width: 768px) {
-    #menu-toggle {
-        display: block;
+    .menu-toggle-container {
+        display: flex;
         position: relative;
         z-index: 1001;
+    }
+
+    #menu-toggle {
+        display: block;
     }
 
     /* Animación del botón hamburguesa */
@@ -824,7 +847,7 @@ footer {
         background: rgba(139, 0, 0, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        padding: 20px;
+        padding: 15px;
         z-index: 1000;
         animation: slideIn 0.3s ease-out;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
@@ -868,7 +891,7 @@ footer {
     }
 
     #main-nav ul li {
-        margin: 8px 0;
+        margin: 4px 0;
         opacity: 0;
         animation: fadeInUp 0.4s ease-out forwards;
     }
@@ -894,7 +917,7 @@ footer {
 
     #main-nav ul li a {
         font-size: 1rem;
-        padding: 8px 16px;
+        padding: 6px 16px;
         border-radius: 20px;
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
