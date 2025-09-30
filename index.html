@@ -48,17 +48,17 @@
     <link rel="apple-touch-icon" href="images/logonegro.ico">
     
     <!-- Preload critical resources -->
-    <link rel="preload" href="styles.css" as="style">
-    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="styles.css?v=1.0.0" as="style">
+    <link rel="preload" href="script.js?v=1.0.0" as="script">
     
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.0.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=1.0.0" defer></script>
     
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -426,5 +426,16 @@
     <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
         <i class="fas fa-chevron-up"></i>
     </button>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            const swVersion = '1.0.0';
+            const swUrl = `service-worker.js?v=${swVersion}`;
+            navigator.serviceWorker.register(swUrl).catch(function(err){
+                console.error('SW registration failed:', err);
+            });
+        });
+    }
+    </script>
 </body>
 </html>

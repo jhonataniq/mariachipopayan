@@ -1,3 +1,25 @@
+## Service Worker y versionado de assets
+
+Este proyecto usa `service-worker.js` para cachear recursos estáticos en GitHub Pages sin necesidad de configurar el servidor.
+
+Estrategias:
+- Imágenes (`.webp`, `.jpg`, `.png`): cache-first con expiración aproximada de 1 año.
+- CSS/JS: stale-while-revalidate con expiración aproximada de 6 meses.
+
+Versionado:
+- Los assets principales se referencian como `styles.css?v=1.0.0` y `script.js?v=1.0.0` desde `index.html`.
+- El propio `service-worker.js` se registra como `service-worker.js?v=1.0.0` para forzar actualización del SW.
+
+Cómo publicar una nueva versión:
+1. Incrementa la constante `SW_VERSION` en `service-worker.js` (por ejemplo, `v1.0.1`).
+2. Actualiza los query strings de `styles.css?v=...` y `script.js?v=...` en `index.html` con el mismo número de versión.
+3. Sube los cambios a GitHub Pages (push a la rama `main`).
+4. Los navegadores actualizarán el Service Worker y limpiarán caches antiguos automáticamente.
+
+Notas:
+- Si cambias nombres de archivos o rutas, recuerda agregarlos a `PRECACHE_URLS`.
+- Para invalidar imágenes específicas, puedes cambiar su nombre de archivo o añadir un `?v=...` al `src` donde las uses dinámicamente.
+
 # Mariachi Ciudad Blanca - Sitio Web
 
 Sitio web profesional para Mariachi Ciudad Blanca, servicios de música en vivo en Popayán, Cauca.
