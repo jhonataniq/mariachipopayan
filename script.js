@@ -51,17 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funcionalidad del carrusel de fotos optimizado
+    // Funcionalidad del carrusel de fotos optimizado (carga bajo demanda)
     const carouselFotos = (() => {
         const contenido = document.querySelector('.carousel-content');
         const btnPrev = document.querySelector('.carousel-button.prev');
         const btnNext = document.querySelector('.carousel-button.next');
-        
         if (!contenido) return;
-        
         let posicionActual = 0;
-        
-      // Lista completa de imágenes organizadas por categorías
+
+        // Lista completa de imágenes organizadas por categorías (no se inyectan hasta que sea visible)
 const imagenes = [
     // Imágenes principales del grupo de mariachis en Popayán cauca
     { src: 'images/MariachiCiudadBlanca.webp', alt: 'Mariachi Ciudad Blanca - Grupo musical mariachis en Popayán' },
@@ -105,21 +103,24 @@ const imagenes = [
     { src: 'images/mariachis-en-cena.webp', alt: 'Mariachi en cena - Música para eventos gastronómicos' }
 ];
 
-        // Función para cargar las imágenes con lazy loading
+        // Cargar imágenes solo cuando el carrusel sea visible
         const cargarImagenes = () => {
-            imagenes.forEach((imagen, index) => {
+            if (contenido.childElementCount > 0) return;
+            imagenes.forEach((imagen) => {
                 const img = document.createElement('img');
-                img.src = imagen.src; // Cargar inmediatamente para el carrusel
+                img.src = imagen.src;
                 img.alt = imagen.alt;
                 img.classList.add('carousel-img');
                 img.width = 800;
                 img.height = 600;
                 img.title = imagen.alt;
+                img.loading = 'lazy';
                 contenido.appendChild(img);
             });
-            
-            // Agregar indicadores de navegación
             agregarIndicadores();
+            if (btnPrev) btnPrev.addEventListener('click', () => moverCarrusel(-1));
+            if (btnNext) btnNext.addEventListener('click', () => moverCarrusel(1));
+            document.addEventListener('keydown', keyHandler);
         };
 
         // Función para agregar indicadores de navegación
@@ -184,12 +185,8 @@ const imagenes = [
             actualizarCarrusel();
         };
 
-        // Event listeners para los botones
-        if (btnPrev) btnPrev.addEventListener('click', () => moverCarrusel(-1));
-        if (btnNext) btnNext.addEventListener('click', () => moverCarrusel(1));
-
-        // Navegación por teclado
-        document.addEventListener('keydown', (e) => {
+        // Navegación por teclado (solo cuando el carrusel fue inicializado)
+        const keyHandler = (e) => {
             if (e.key === 'ArrowLeft') {
                 e.preventDefault();
                 moverCarrusel(-1);
@@ -197,52 +194,98 @@ const imagenes = [
                 e.preventDefault();
                 moverCarrusel(1);
             }
-        });
+        };
 
         // Auto-play opcional (comentado por defecto)
         // let autoPlayInterval = setInterval(() => moverCarrusel(1), 5000);
 
-        // Inicialización
-        return {
-            init: cargarImagenes
+        // Inicialización diferida por intersección
+        const init = () => {
+            const carrusel = document.querySelector('.carousel');
+            if (!carrusel) return;
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        cargarImagenes();
+                        io.disconnect();
+                    }
+                });
+            }, { rootMargin: '200px 0px' });
+            io.observe(carrusel);
         };
+
+        return { init };
     })();
 
-    // Funcionalidad de la galería de videos optimizada
+    // Galería de videos: miniaturas con carga del iframe al hacer clic
     const galeriaVideos = (() => {
         const contenedor = document.querySelector('.video-grid');
-        
         if (!contenedor) return;
-        
-        // Videos de ejemplo (reemplazar con IDs reales de YouTube)
         const videosYoutube = [
             { id: 'VIDEO_ID_1', title: 'Mariachi Ciudad Blanca - Presentación' },
             { id: 'VIDEO_ID_2', title: 'Mariachi en boda - Evento especial' },
             { id: 'VIDEO_ID_3', title: 'Mariachi en quinceañera - Celebración' }
         ];
 
-        const cargarVideos = () => {
-            videosYoutube.forEach(video => {
-                const videoContainer = document.createElement('div');
-                videoContainer.className = 'video-item';
-                
+        const crearThumbnail = (video) => {
+            const wrapper = document.createElement('button');
+            wrapper.type = 'button';
+            wrapper.className = 'video-item';
+            wrapper.style.position = 'relative';
+            wrapper.style.backgroundImage = `url(https://i.ytimg.com/vi/${video.id}/hqdefault.jpg)`;
+            wrapper.style.backgroundSize = 'cover';
+            wrapper.style.backgroundPosition = 'center';
+            wrapper.style.aspectRatio = '16 / 9';
+            wrapper.setAttribute('aria-label', `Reproducir video: ${video.title}`);
+
+            const play = document.createElement('span');
+            play.style.position = 'absolute';
+            play.style.inset = '0';
+            play.style.display = 'flex';
+            play.style.alignItems = 'center';
+            play.style.justifyContent = 'center';
+            play.style.background = 'rgba(0,0,0,0.25)';
+            play.style.color = '#fff';
+            play.style.fontSize = '48px';
+            play.textContent = '▶';
+            wrapper.appendChild(play);
+
+            wrapper.addEventListener('click', () => {
                 const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${video.id}`;
+                iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
                 iframe.width = '100%';
-                iframe.height = '315';
+                iframe.height = '100%';
                 iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
                 iframe.allowFullscreen = true;
                 iframe.title = video.title;
-                iframe.loading = 'lazy';
-                
-                videoContainer.appendChild(iframe);
-                contenedor.appendChild(videoContainer);
+                wrapper.replaceWith(iframe);
+            });
+
+            return wrapper;
+        };
+
+        const cargarThumbnails = () => {
+            if (contenedor.childElementCount > 0) return;
+            videosYoutube.forEach(video => {
+                contenedor.appendChild(crearThumbnail(video));
             });
         };
 
-        return {
-            init: cargarVideos
+        const init = () => {
+            const seccionVideos = document.querySelector('.galeria-videos');
+            if (!seccionVideos) return;
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        cargarThumbnails();
+                        io.disconnect();
+                    }
+                });
+            }, { rootMargin: '200px 0px' });
+            io.observe(seccionVideos);
         };
+
+        return { init };
     })();
 
     // Funcionalidad de navegación suave optimizada
@@ -266,7 +309,7 @@ const imagenes = [
         });
     })();
 
-    // Animación de entrada optimizada para las secciones
+    // Animación de entrada optimizada (inicializar en idle)
     const animacionEntrada = (() => {
         const secciones = document.querySelectorAll('section');
 
@@ -291,7 +334,7 @@ const imagenes = [
         });
     })();
 
-    // Funcionalidad del botón "Volver arriba"
+    // Funcionalidad del botón "Volver arriba" (inicializar en idle)
     const botonVolverArriba = (() => {
         const boton = document.getElementById('backToTop');
         
@@ -319,7 +362,7 @@ const imagenes = [
         boton.addEventListener('click', volverArriba);
     })();
 
-    // FAQ Functionality
+    // FAQ Functionality (ligero, mantener)
 (function() {
     const faqQuestions = document.querySelectorAll('.faq-question');
     
@@ -343,11 +386,24 @@ const imagenes = [
     });
 })();
 
-    // Inicialización de componentes
+    // Inicialización de componentes diferida
     if (carouselFotos) carouselFotos.init();
     if (galeriaVideos) galeriaVideos.init();
 
-    // navegacionSuave, animacionEntrada, formularioContacto y botonVolverArriba se auto-inicializan
+    // navegacionSuave se auto-inicializa
+    // Inicializaciones no críticas en idle
+    const deferIdle = (cb) => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(cb, { timeout: 1500 });
+        } else {
+            setTimeout(cb, 300);
+        }
+    };
+
+    deferIdle(() => {
+        // animacionEntrada y botonVolverArriba ya se evaluaron; nada pesado aquí
+        // Este espacio queda para futuras tareas no críticas
+    });
 
     // Manejo de errores mejorado
     window.addEventListener('error', (e) => {

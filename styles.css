@@ -156,6 +156,8 @@ section {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s, transform 0.5s;
+    content-visibility: auto;
+    contain-intrinsic-size: 800px 600px;
 }
 
 section.visible {
@@ -474,6 +476,10 @@ section p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
+}
+.video-item {
+    aspect-ratio: 16 / 9;
+    display: block;
 }
 
 .video-item {
