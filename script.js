@@ -63,28 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
       // Lista completa de imágenes organizadas por categorías
 const imagenes = [
-    // Imágenes principales del grupo
-    { src: 'images/MariachiCiudadBlanca.webp', alt: 'Mariachi Ciudad Blanca - Grupo musical profesional en Popayán' },
-    { src: 'images/Musico-Popayan-Cauca.webp', alt: 'Músico Popayán Cauca - Artista local especializado en mariachi' },
+    // Imágenes principales del grupo de mariachis en Popayán cauca
+    { src: 'images/MariachiCiudadBlanca.webp', alt: 'Mariachi Ciudad Blanca - Grupo musical mariachis en Popayán' },
+    { src: 'images/Musico-Popayan-Cauca.webp', alt: 'Músico Popayán Cauca - Artistas locales especializados en mariachi' },
     
     // Bodas y eventos románticos
-    { src: 'images/mariachis-bodas.webp', alt: 'Mariachi en bodas - Música romántica para el día más especial' },
-    { src: 'images/mariachis-en-boda.webp', alt: 'Mariachi en boda - Serenata y música en vivo para bodas' },
+    { src: 'images/mariachis-bodas.webp', alt: 'Mariachi en bodas Popayán cauca- Música romántica para el día más especial' },
+    { src: 'images/mariachis-en-boda.webp', alt: 'Mariachi en boda popayan- Serenata y música en vivo para bodas' },
     { src: 'images/mariachis-en-quinceaneras.webp', alt: 'Mariachi en quinceañeras - Celebración de 15 años con música tradicional' },
     
     // Cumpleaños y celebraciones familiares
-    { src: 'images/mariachis-cumpleaños.webp', alt: 'Mariachi en cumpleaños - Música festiva para celebrar años de vida' },
+    { src: 'images/mariachis-cumpleaños.webp', alt: 'Mariachis en cumpleaños Popayán cauca - Música festiva para celebrar cumpleaños de vida' },
     { src: 'images/mariachis-en-fiestas-de-cumpleanos.webp', alt: 'Mariachi en fiestas de cumpleaños - Ambiente festivo y alegre' },
-    { src: 'images/mariachis-en-aniversarios.webp', alt: 'Mariachi en aniversarios - Celebración de años de amor' },
+    { src: 'images/mariachis-en-aniversarios.webp', alt: 'Mariachi en aniversarios Popayán cauca - Celebración de años de amor' },
     
-    // Eventos familiares y sociales
-    { src: 'images/mariachis-en-eventos-familiares.webp', alt: 'Mariachi en eventos familiares - Música para reuniones familiares' },
-    { src: 'images/mariachis-en-reuniones-sociales.webp', alt: 'Mariachi en reuniones sociales - Música para eventos sociales' },
-    { src: 'images/mariachis-en-fiesta-privada.webp', alt: 'Mariachi en fiesta privada - Eventos exclusivos y privados' },
+    // Eventos familiares y sociales musicos en popayán cauca 
+    { src: 'images/mariachis-en-eventos-familiares.webp', alt: 'Mariachi en eventos familiares cauca- Música para reuniones familiares' },
+    { src: 'images/mariachis-en-reuniones-sociales.webp', alt: 'Mariachi en reuniones sociales cauca- Música para eventos sociales' },
+    { src: 'images/mariachis-en-fiesta-privada.webp', alt: 'Mariachis en fiesta privada - Eventos exclusivos y privados' },
     
-    // Eventos corporativos y empresariales
+    // Eventos corporativos y empresariales con mariachis en popayán
     { src: 'images/mariachis-en-evento-corporativo.webp', alt: 'Mariachi en evento corporativo - Música para empresas y organizaciones' },
-    { src: 'images/mariachis-en-eventos-corporativos.webp', alt: 'Mariachi en eventos corporativos - Presentaciones empresariales' },
+    { src: 'images/mariachis-en-eventos-corporativos.webp', alt: 'Mariachis en eventos corporativos  Popayán cauca	- Presentaciones empresariales' },
     { src: 'images/mariachis-en-fiestas-empresariales.webp', alt: 'Mariachi en fiestas empresariales - Celebración corporativa' },
     
     // Eventos culturales y festividades
@@ -93,11 +93,11 @@ const imagenes = [
     { src: 'images/mariachis-en-fiestas-patronales.webp', alt: 'Mariachi en fiestas patronales - Celebración religiosa y cultural' },
     { src: 'images/mariachis-en-fiestas-nacionales.webp', alt: 'Mariachi en fiestas nacionales - Patrias y celebraciones nacionales' },
     
-    // Eventos religiosos y ceremonias
-    { src: 'images/mariachis-en-eventos-religiosos.webp', alt: 'Mariachi en eventos religiosos - Ceremonias espirituales' },
+    // Eventos religiosos y ceremonias mariachi en popayán
+    { src: 'images/mariachis-en-eventos-religiosos.webp', alt: 'Mariachi cristianos popayan cauca - Ceremonias espirituales' },
     { src: 'images/mariachis-en-ceremonias-formales.webp', alt: 'Mariachi en ceremonias formales - Eventos protocolarios' },
     
-    // Conciertos y presentaciones
+    // Conciertos y presentaciones serenatas en popayán
     { src: 'images/mariachis-en-conciertos.webp', alt: 'Mariachi en conciertos - Presentaciones musicales en vivo' },
     { src: 'images/mariachis-en-desfiles.webp', alt: 'Mariachi en desfiles - Participación en eventos públicos' },
     
