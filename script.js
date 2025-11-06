@@ -222,21 +222,61 @@ const imagenes = [
         const contenedor = document.querySelector('.video-grid');
         if (!contenedor) return;
         const videosYoutube = [
-            { id: 'VIDEO_ID_1', title: 'Mariachi Ciudad Blanca - Presentación' },
-            { id: 'VIDEO_ID_2', title: 'Mariachi en boda - Evento especial' },
-            { id: 'VIDEO_ID_3', title: 'Mariachi en quinceañera - Celebración' }
+            { 
+                id: 'o9C3h_Y3ncI', 
+                title: 'Mariachi Ciudad Blanca en Popayán - Presentación Musical en Vivo',
+                description: 'Presentación del Mariachi Ciudad Blanca con música ranchera en vivo en Popayán, Cauca'
+            },
+            { 
+                id: '7IC0nmW4BUQ', 
+                title: 'Mariachi en Boda Popayán - Música Romántica para Bodas',
+                description: 'Mariachi Ciudad Blanca tocando en boda en Popayán con serenata romántica y música tradicional mexicana'
+            },
+            { 
+                id: 'ZkppdukyRX0', 
+                title: 'Mariachi en Evento Especial Popayán - Música Ranchera en Vivo',
+                description: 'Presentación del mariachi en evento especial en Popayán con repertorio tradicional mexicano'
+            },
+            { 
+                id: 'tZv8OdWMT7M', 
+                title: 'Mariachi Ciudad Blanca - Serenata en Popayán Cauca',
+                description: 'Serenata con mariachi en Popayán, música ranchera en vivo para eventos especiales'
+            },
+            { 
+                id: 'KtFMlJ9YV7g', 
+                title: 'Mariachi para Quinceañera Popayán - Celebración de 15 Años',
+                description: 'Mariachi Ciudad Blanca en quinceañera en Popayán con música festiva y tradicional'
+            },
+            { 
+                id: 'ORGd0C5kkJA', 
+                title: 'Mariachi en Cumpleaños Popayán - Música para Fiestas',
+                description: 'Presentación del mariachi en cumpleaños en Popayán con música alegre y festiva'
+            },
+            { 
+                id: 'lEmzezY2jNw', 
+                title: 'Mariachi en Evento Corporativo Popayán - Música para Empresas',
+                description: 'Mariachi Ciudad Blanca en evento corporativo en Popayán, música profesional para empresas'
+            },
+            { 
+                id: 'z-PlBS1EOXk', 
+                title: 'Mariachi en Celebración Popayán - Música Tradicional Mexicana',
+                description: 'Presentación del mariachi en celebración en Popayán con música tradicional mexicana en vivo'
+            }
         ];
 
         const crearThumbnail = (video) => {
-            const wrapper = document.createElement('button');
-            wrapper.type = 'button';
-            wrapper.className = 'video-item';
-            wrapper.style.position = 'relative';
-            wrapper.style.backgroundImage = `url(https://i.ytimg.com/vi/${video.id}/hqdefault.jpg)`;
-            wrapper.style.backgroundSize = 'cover';
-            wrapper.style.backgroundPosition = 'center';
-            wrapper.style.aspectRatio = '16 / 9';
-            wrapper.setAttribute('aria-label', `Reproducir video: ${video.title}`);
+            const wrapper = document.createElement('article');
+            wrapper.className = 'video-item-wrapper';
+            
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'video-item';
+            button.style.position = 'relative';
+            button.style.backgroundImage = `url(https://i.ytimg.com/vi/${video.id}/hqdefault.jpg)`;
+            button.style.backgroundSize = 'cover';
+            button.style.backgroundPosition = 'center';
+            button.style.aspectRatio = '16 / 9';
+            button.setAttribute('aria-label', `Reproducir video: ${video.title}`);
 
             const play = document.createElement('span');
             play.style.position = 'absolute';
@@ -248,19 +288,51 @@ const imagenes = [
             play.style.color = '#fff';
             play.style.fontSize = '48px';
             play.textContent = '▶';
-            wrapper.appendChild(play);
+            button.appendChild(play);
 
-            wrapper.addEventListener('click', () => {
+            const title = document.createElement('h4');
+            title.className = 'video-title';
+            title.textContent = video.title;
+            wrapper.appendChild(title);
+
+            if (video.description) {
+                const description = document.createElement('p');
+                description.className = 'video-description';
+                description.textContent = video.description;
+                wrapper.appendChild(description);
+            }
+
+            button.addEventListener('click', () => {
+                // Obtener el origen actual para ayudar con CORS
+                const origin = window.location.origin || 'https://www.mariachipopayan.com';
+                
                 const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
-                iframe.width = '100%';
-                iframe.height = '100%';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
+                // Parámetros mejorados para evitar errores de YouTube
+                // enablejsapi=1: Habilita la API de JavaScript
+                // origin: Ayuda con restricciones CORS
+                // rel=0: No mostrar videos relacionados
+                // modestbranding=1: Menos branding de YouTube
+                iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1&playsinline=1&origin=${encodeURIComponent(origin)}`;
+                iframe.className = 'video-item';
+                iframe.style.width = '100%';
+                iframe.style.aspectRatio = '16 / 9';
+                iframe.setAttribute('frameborder', '0');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+                iframe.setAttribute('allowfullscreen', '');
                 iframe.title = video.title;
-                wrapper.replaceWith(iframe);
+                iframe.setAttribute('loading', 'lazy');
+                iframe.setAttribute('aria-label', `Video: ${video.title}`);
+                
+                // Manejo de errores: si hay un problema, redirigir a YouTube
+                iframe.addEventListener('error', () => {
+                    console.warn('Error al cargar el iframe, redirigiendo a YouTube');
+                    window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank');
+                });
+                
+                button.replaceWith(iframe);
             });
 
+            wrapper.appendChild(button);
             return wrapper;
         };
 
